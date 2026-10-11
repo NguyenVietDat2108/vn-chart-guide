@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cẩm Nang Toàn Diện Siêu Chi Tiết 100% - Phần Mềm Chứng Khoán VNChart Senior</title>
+  <meta name="description" content="Hướng dẫn sử dụng chi tiết 100% từng nút bấm, sổ lệnh FireAnt, biểu đồ nến, bot định lượng AI Quant và quản trị rủi ro trên VNChart Senior.">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            brand: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              500: '#0284c7',
+              600: '#0369a1',
+              700: '#075985',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Thanh cuộn mềm mại */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.05); }
+    ::-webkit-scrollbar-thumb { background: #0284c7; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #0369a1; }
+    .card-hover { transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
+    .card-hover:hover { transform: translateY(-3px); box-shadow: 0 16px 32px -8px rgba(0, 0, 0, 0.12); }
+    .badge-label { font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.03em; }
+    
+    /* Chỉnh cỡ chữ động */
+    body.font-size-large { font-size: 1.125rem; }
+    body.font-size-large h2 { font-size: 2rem; }
+    body.font-size-large h3 { font-size: 1.35rem; }
+    body.font-size-xlarge { font-size: 1.25rem; }
+    body.font-size-xlarge h2 { font-size: 2.25rem; }
+    body.font-size-xlarge h3 { font-size: 1.5rem; }
+  </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 font-sans antialiased selection:bg-sky-500 selection:text-white transition-colors duration-200">
+
+  <!-- ========================================================================= -->
+  <!-- HEADER & TOP NAVBAR -->
+  <!-- ========================================================================= -->
+  <header class="sticky top-0 z-50 backdrop-blur-md bg-white/95 dark:bg-slate-900/95 border-b border-slate-200 dark:border-slate-800 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      
+      <!-- Brand Logo -->
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-600 via-blue-600 to-indigo-600 p-0.5 shadow-md shadow-sky-500/25 group-hover:scale-105 transition-transform">
+          <div class="w-full h-full bg-slate-900 rounded-[10px] flex items-center justify-center">
+            <span class="text-xl">📈</span>
+          </div>
+        </div>
+        <div>
+          <div class="font-black text-lg sm:text-xl tracking-tight bg-gradient-to-r from-sky-600 to-indigo-600 dark:from-sky-400 dark:to-indigo-400 bg-clip-text text-transparent">
+            VNChart Senior
+          </div>
+          <div class="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+            Cẩm Nang Hướng Dẫn Siêu Chi Tiết 100% Từng Nút Bấm
+          </div>
+        </div>
+      </a>
+
+      <!-- Quick Search Bar with Instant Counter -->
+      <div class="flex-1 max-w-md hidden md:block">
+        <div class="relative">
+          <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-slate-400 text-sm">🔍</span>
+          <input type="text" id="guide-search" placeholder="Gõ tìm: nến sạch, Fibo, cắt lỗ, T+, cá mập, margin, 1D..."
+            class="w-full pl-10 pr-24 py-2 text-xs sm:text-sm rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-100/90 dark:bg-slate-800/90 focus:bg-white dark:focus:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-sky-500 transition-all font-medium">
+          <span id="search-counter" class="absolute inset-y-0 right-0 flex items-center pr-3 text-[11px] font-bold text-slate-400">95 nút bấm</span>
+        </div>
+      </div>
+
+      <!-- Right Controls: Font size toggle & Theme toggle -->
+      <div class="flex items-center gap-2">
+        <div class="hidden sm:flex items-center bg-slate-100 dark:bg-slate-800 p-1 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-black">
+          <button id="btn-font-normal" class="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-700 shadow-sm text-sky-600 dark:text-sky-300">Vừa</button>
+          <button id="btn-font-large" class="px-2.5 py-1 rounded-lg hover:text-sky-500 transition-colors">To ⭐</button>
+          <button id="btn-font-xlarge" class="px-2.5 py-1 rounded-lg hover:text-sky-500 transition-colors">Rất To</button>
+        </div>
+
+        <button id="theme-toggle" class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition-colors" title="Đổi màu sáng / tối">
+          <span id="theme-icon" class="text-base">🌙</span>
+        </button>
+
+        <a href="http://127.0.0.1:3000" target="_blank" class="px-3.5 py-2 rounded-xl bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-500 hover:to-blue-500 text-white font-black text-xs shadow-md shadow-sky-600/25 transition-all flex items-center gap-1.5">
+          <span>🖥️ Mở Ứng Dụng</span>
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ========================================================================= -->
+  <!-- HERO BANNER -->
+  <!-- ========================================================================= -->
+  <section class="bg-gradient-to-b from-sky-500/10 via-indigo-500/5 to-transparent border-b border-slate-200/60 dark:border-slate-800/60 py-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 text-sky-600 dark:text-sky-400 text-xs font-black tracking-wide border border-sky-500/20">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+        HỆ THỐNG TRỢ LÝ ĐẦU TƯ CHỨNG KHOÁN CHUYÊN NGHIỆP DÀNH CHO GIA ĐÌNH
+      </div>
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
+        Cẩm Nang Sử Dụng Toàn Diện <span class="bg-gradient-to-r from-sky-600 to-indigo-600 dark:from-sky-400 dark:to-indigo-400 bg-clip-text text-transparent">VNChart Senior</span>
+      </h1>
+      <p class="max-w-3xl mx-auto text-sm sm:text-base text-slate-600 dark:text-slate-300 font-medium leading-relaxed">
+        Tài liệu được biên soạn tỉ mỉ, giải thích cặn kẽ <b>100% từng nút bấm, biểu tượng, màu sắc</b> và <b>kịch bản khi nào nên dùng</b> để bất kỳ thành viên nào trong gia đình cũng có thể tự tin xem bảng điện, bắt đúng nhịp sóng cổ phiếu và bảo toàn vốn tuyệt đối.
+      </p>
+
+      <!-- Quick Jump Shortcuts -->
+      <div class="pt-4 flex flex-wrap items-center justify-center gap-2 text-xs font-bold">
+        <a href="#quickstart" class="px-3.5 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-sky-500 text-slate-700 dark:text-slate-200 hover:text-sky-600 dark:hover:text-sky-400 shadow-sm transition-all flex items-center gap-1.5">
+          <span>🚀</span> Khởi Động 1-Click
+        </a>
+        <a href="#daily-scenario" class="px-3.5 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-sky-500 text-slate-700 dark:text-slate-200 hover:text-sky-600 dark:hover:text-sky-400 shadow-sm transition-all flex items-center gap-1.5">
+          <span>⏰</span> Kịch Bản Giao Dịch Trong Ngày
+        </a>
+        <a href="#header-controls" class="px-3.5 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-sky-500 text-slate-700 dark:text-slate-200 hover:text-sky-600 dark:hover:text-sky-400 shadow-sm transition-all flex items-center gap-1.5">
+          <span>🎛️</span> 8 Nút Trên Header
+        </a>
+        <a href="#chart-controls" class="px-3.5 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-sky-500 text-slate-700 dark:text-slate-200 hover:text-sky-600 dark:hover:text-sky-400 shadow-sm transition-all flex items-center gap-1.5">
+          <span>🕯️</span> 20 Công Cụ Biểu Đồ
+        </a>
+        <a href="#orderbook-guide" class="px-3.5 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-sky-500 text-slate-700 dark:text-slate-200 hover:text-sky-600 dark:hover:text-sky-400 shadow-sm transition-all flex items-center gap-1.5">
+          <span>📊</span> Đọc Sổ Lệnh FireAnt
+        </a>
+        <a href="#quant-bots" class="px-3.5 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-sky-500 text-slate-700 dark:text-slate-200 hover:text-sky-600 dark:hover:text-sky-400 shadow-sm transition-all flex items-center gap-1.5">
+          <span>🤖</span> 3 Chế Độ Bot Quant
+        </a>
+        <a href="#radars-guide" class="px-3.5 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-sky-500 text-slate-700 dark:text-slate-200 hover:text-sky-600 dark:hover:text-sky-400 shadow-sm transition-all flex items-center gap-1.5">
+          <span>🚨</span> Bộ Ba Radar Cơ Hội
+        </a>
+        <a href="#bottom-tabs" class="px-3.5 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-sky-500 text-slate-700 dark:text-slate-200 hover:text-sky-600 dark:hover:text-sky-400 shadow-sm transition-all flex items-center gap-1.5">
+          <span>📂</span> 11 Tab Phía Dưới
+        </a>
+        <a href="#modal-guides" class="px-3.5 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-sky-500 text-slate-700 dark:text-slate-200 hover:text-sky-600 dark:hover:text-sky-400 shadow-sm transition-all flex items-center gap-1.5">
+          <span>📦</span> Hộp Thoại & Đóng Gói
+        </a>
+        <a href="#risk-management" class="px-3.5 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-sky-500 text-slate-700 dark:text-slate-200 hover:text-sky-600 dark:hover:text-sky-400 shadow-sm transition-all flex items-center gap-1.5">
+          <span>🛡️</span> Quản Trị Vốn & Cắt Lỗ
+        </a>
+        <a href="#faq" class="px-3.5 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-sky-500 text-slate-700 dark:text-slate-200 hover:text-sky-600 dark:hover:text-sky-400 shadow-sm transition-all flex items-center gap-1.5">
+          <span>❓</span> Hỏi & Đáp (FAQ)
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- MAIN LAYOUT WITH STICKY SIDEBAR -->
+  <!-- ========================================================================= -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex gap-8">
+    
+    <!-- Left Navigation Sticky Sidebar -->
+    <aside class="w-64 flex-shrink-0 hidden lg:block">
+      <div class="sticky top-24 space-y-1 text-xs font-bold bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+        <div class="text-[11px] font-black uppercase text-slate-400 tracking-wider mb-2 px-2 flex justify-between items-center">
+          <span>Mục Lục Cẩm Nang</span>
+          <span class="text-sky-500">12 Phần</span>
+        </div>
+        <a href="#quickstart" class="block px-2.5 py-1.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-sky-50 dark:hover:bg-slate-800 hover:text-sky-600 transition-colors">1. Khởi động nhanh & Chạy ngầm</a>
+        <a href="#daily-scenario" class="block px-2.5 py-1.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-sky-50 dark:hover:bg-slate-800 hover:text-sky-600 transition-colors">2. Kịch bản giao dịch trong ngày</a>
+        <a href="#header-controls" class="block px-2.5 py-1.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-sky-50 dark:hover:bg-slate-800 hover:text-sky-600 transition-colors">3. 8 Nút trên thanh tiêu đề</a>
+        <a href="#chart-controls" class="block px-2.5 py-1.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-sky-50 dark:hover:bg-slate-800 hover:text-sky-600 transition-colors">4. 20 Công cụ biểu đồ nến</a>
+        <a href="#orderbook-guide" class="block px-2.5 py-1.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-sky-50 dark:hover:bg-slate-800 hover:text-sky-600 transition-colors">5. Sổ lệnh FireAnt & Cá mập</a>
+        <a href="#quant-bots" class="block px-2.5 py-1.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-sky-50 dark:hover:bg-slate-800 hover:text-sky-600 transition-colors">6. 3 Chế độ Bot định lượng AI</a>
+        <a href="#radars-guide" class="block px-2.5 py-1.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-sky-50 dark:hover:bg-slate-800 hover:text-sky-600 transition-colors">7. Bộ 3 Radar săn cơ hội</a>
+        <a href="#bottom-tabs" class="block px-2.5 py-1.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-sky-50 dark:hover:bg-slate-800 hover:text-sky-600 transition-colors">8. 11 Tab phân tích chuyên sâu</a>
+        <a href="#modal-guides" class="block px-2.5 py-1.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-sky-50 dark:hover:bg-slate-800 hover:text-sky-600 transition-colors">9. Hộp thoại Chỉ báo & Đóng gói</a>
+        <a href="#fscore-guide" class="block px-2.5 py-1.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-sky-50 dark:hover:bg-slate-800 hover:text-sky-600 transition-colors">10. Sức khỏe tài chính F-Score</a>
+        <a href="#risk-management" class="block px-2.5 py-1.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-sky-50 dark:hover:bg-slate-800 hover:text-sky-600 transition-colors">11. Quản trị vốn & Cắt lỗ SL</a>
+        <a href="#faq" class="block px-2.5 py-1.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-sky-50 dark:hover:bg-slate-800 hover:text-sky-600 transition-colors">12. Câu hỏi thường gặp (FAQ)</a>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 space-y-16">
+
+      <!-- ===================================================================== -->
+      <!-- CHƯƠNG 1: KHỞI ĐỘNG 1-CLICK & CHẠY NGẦM -->
+      <!-- ===================================================================== -->
+      <section id="quickstart" class="scroll-mt-24 space-y-6">
+        <div class="flex items-center gap-3 border-b border-slate-200 dark:border-slate-800 pb-4">
+          <div class="w-10 h-10 rounded-2xl bg-sky-500/10 text-sky-600 dark:text-sky-400 font-black flex items-center justify-center text-lg shadow-sm">1</div>
+          <div>
+            <h2 class="text-2xl font-black text-slate-900 dark:text-white">Khởi Động Nhanh 1-Click & Chế Độ Chạy Ngầm Hoàn Toàn</h2>
+            <p class="text-xs text-slate-500 font-medium">Bí quyết mở ứng dụng như một phần mềm chuyên nghiệp, không bao giờ hiện bảng đen CMD</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <!-- Hộp 1: Cài đặt cho máy mới -->
+          <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm card-hover space-y-4">
+            <div class="flex items-center justify-between">
+              <span class="badge-label bg-emerald-500/15 text-emerald-600 dark:text-emerald-400">Bước 1 · Cài Đặt Ban Đầu</span>
+              <span class="text-xl">🌱</span>
+            </div>
+            <h3 class="font-extrabold text-base text-slate-900 dark:text-white">Chạy file Cai_Dat_VNChart.bat (Đúng 1 Lần Duy Nhất)</h3>
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+              Bạn chỉ cần sao chép file <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 font-mono text-sky-600 font-bold">Cai_Dat_VNChart.bat</code> (hoặc file nén zip) sang máy tính. Nhấp đúp chuột 1 lần duy nhất:
+            </p>
+            <ul class="text-xs text-slate-600 dark:text-slate-300 space-y-2 font-medium">
+              <li class="flex items-start gap-2">
+                <span class="text-emerald-500 font-bold">✓</span>
+                <span>Tự động kiểm tra và cài đặt ngầm Python chính thức nếu máy chưa có.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-emerald-500 font-bold">✓</span>
+                <span>Tự động tải 1,520 mã nến lịch sử 25 năm từ kho GitHub về ổ cứng máy tính.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-emerald-500 font-bold">✓</span>
+                <span>Tự động tạo biểu tượng phím tắt <b>Phần mềm chứng khoán</b> có logo xanh ngoài màn hình chính Desktop.</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Hộp 2: Sử dụng hàng ngày -->
+          <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm card-hover space-y-4">
+            <div class="flex items-center justify-between">
+              <span class="badge-label bg-blue-500/15 text-blue-600 dark:text-blue-400">Bước 2 · Mở Hàng Ngày</span>
+              <span class="text-xl">🖥️</span>
+            </div>
+            <h3 class="font-extrabold text-base text-slate-900 dark:text-white">Bấm Biểu Tượng Ngoài Màn Hình Desktop</h3>
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+              Mỗi ngày khi muốn xem biểu đồ, bạn chỉ việc nhấp đúp chuột vào biểu tượng <b>Phần mềm chứng khoán</b> ngoài Desktop:
+            </p>
+            <div class="p-3.5 rounded-xl bg-sky-50 dark:bg-sky-950/30 text-sky-900 dark:text-sky-200 text-xs font-semibold leading-relaxed border border-sky-200 dark:border-sky-800/50">
+              💡 <b>Không hiện cửa sổ đen:</b> Phần mềm được lập trình chạy ngầm hoàn toàn qua kịch bản <code class="font-mono">chay_ngam.vbs</code>. Máy chủ tự động bật trong nền và trình duyệt tự mở ra bảng điện mà không hề làm phiền mắt bạn.
+            </div>
+            <div class="text-xs text-slate-500 font-medium">
+              🛑 <b>Khi muốn tắt hoàn toàn:</b> Nhấp đúp vào file <code class="font-mono text-rose-500 font-bold">Tat_VNChart.bat</code>.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================================== -->
+      <!-- CHƯƠNG 2: KỊCH BẢN GIAO DỊCH TRONG NGÀY DÀNH CHO GIA ĐÌNH -->
+      <!-- ===================================================================== -->
+      <section id="daily-scenario" class="scroll-mt-24 space-y-6">
+        <div class="flex items-center gap-3 border-b border-slate-200 dark:border-slate-800 pb-4">
+          <div class="w-10 h-10 rounded-2xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 font-black flex items-center justify-center text-lg shadow-sm">2</div>
+          <div>
+            <h2 class="text-2xl font-black text-slate-900 dark:text-white">Kịch Bản Giao Dịch Trong Ngày (Thời Khắc Nào Nên Bấm Nút Nào?)</h2>
+            <p class="text-xs text-slate-500 font-medium">Lộ trình 5 bước thực chiến từ sáng đến chiều giúp bạn không bị bối rối hay đưa ra quyết định sai lầm</p>
+          </div>
+        </div>
+
+        <div class="space-y-4">
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm card-hover flex flex-col md:flex-row gap-4 items-start">
+            <div class="w-24 flex-shrink-0 px-3 py-1.5 rounded-xl bg-amber-500/15 text-amber-600 dark:text-amber-400 font-mono font-black text-center text-xs">
+              08:30 - 09:00
+            </div>
+            <div class="space-y-1.5 text-xs">
+              <h3 class="font-extrabold text-sm text-slate-900 dark:text-white">Bước 1: Chuẩn Bị & Lọc Cổ Phiếu Tiềm Năng Trước Giờ Mở Cửa</h3>
+              <p class="text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+                Mở ứng dụng từ Desktop. Xuống phần <b>Bộ Quét 3 Sàn</b> hoặc bấm <b>Radar Xoay Ngành RRG</b> để xem dòng tiền đang tập trung vào nhóm nào (Ngân hàng, Thép, Bất động sản hay Chứng khoán). Chọn ra 3 đến 5 mã cổ phiếu ưng ý nhất và bấm biểu tượng <b>☆ (Sao vàng)</b> để đưa vào danh mục theo dõi.
+              </p>
+            </div>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm card-hover flex flex-col md:flex-row gap-4 items-start">
+            <div class="w-24 flex-shrink-0 px-3 py-1.5 rounded-xl bg-sky-500/15 text-sky-600 dark:text-sky-400 font-mono font-black text-center text-xs">
+              09:30 - 10:30
+            </div>
+            <div class="space-y-1.5 text-xs">
+              <h3 class="font-extrabold text-sm text-slate-900 dark:text-white">Bước 2: Quan Sát Sổ Lệnh FireAnt & Bắt Bài Dòng Tiền Cá Mập</h3>
+              <p class="text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+                Gõ mã cổ phiếu bạn đang theo dõi vào <b>Ô Tìm Mã</b>. Nhìn sang cột <b>Dòng Khớp Lệnh Thời Gian Thực</b> bên trái: Nếu thấy xuất hiện nhiều lệnh lớn <b>màu xanh lá (50,000 - 100,000+ cổ phiếu)</b> khớp liên tục vào giá treo bán thì đó là dấu hiệu các tổ chức tay to đang âm thầm gom hàng.
+              </p>
+            </div>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm card-hover flex flex-col md:flex-row gap-4 items-start">
+            <div class="w-24 flex-shrink-0 px-3 py-1.5 rounded-xl bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-mono font-black text-center text-xs">
+              10:30 - 11:30
+            </div>
+            <div class="space-y-1.5 text-xs">
+              <h3 class="font-extrabold text-sm text-slate-900 dark:text-white">Bước 3: Bấm Nút "Radar Quét T+" Tìm Cổ Phiếu Nổ Khối Lượng</h3>
+              <p class="text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+                Bấm nút <b>⚡ Radar Quét T+</b> ở thanh trên cùng. Radar sẽ quét toàn bộ 3 sàn để tìm ra những cổ phiếu vừa mới vượt đỉnh với thanh khoản đột biến. Bấm vào mã trên bảng radar để chuyển ngay sang biểu đồ của mã đó và kiểm tra điểm mua an toàn.
+              </p>
+            </div>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm card-hover flex flex-col md:flex-row gap-4 items-start">
+            <div class="w-24 flex-shrink-0 px-3 py-1.5 rounded-xl bg-purple-500/15 text-purple-600 dark:text-purple-400 font-mono font-black text-center text-xs">
+              14:00 - 14:25
+            </div>
+            <div class="space-y-1.5 text-xs">
+              <h3 class="font-extrabold text-sm text-slate-900 dark:text-white">Bước 4: Kiểm Tra Tín Hiệu Bot Định Lượng AI Xác Nhận Phiên Chiều</h3>
+              <p class="text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+                Đây là thời điểm dòng tiền thật lộ diện rõ ràng nhất. Kiểm tra xem trên biểu đồ có xuất hiện <b>Mũi tên XANH (BÙNG NỔ MUA)</b> hay <b>Mũi tên ĐỎ (BÁN HẠ TỶ TRỌNG)</b>. Nhìn hai dải mục tiêu <b>Vạch Xanh (TP - Chốt lời)</b> và <b>Vạch Đỏ (SL - Cắt lỗ)</b> để ước tính tỷ lệ lợi nhuận / rủi ro trước khi vào lệnh.
+              </p>
+            </div>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm card-hover flex flex-col md:flex-row gap-4 items-start">
+            <div class="w-24 flex-shrink-0 px-3 py-1.5 rounded-xl bg-rose-500/15 text-rose-600 dark:text-rose-400 font-mono font-black text-center text-xs">
+              14:30 - 14:45
+            </div>
+            <div class="space-y-1.5 text-xs">
+              <h3 class="font-extrabold text-sm text-slate-900 dark:text-white">Bước 5: Phiên Khớp Lệnh Định Kỳ ATC - Thực Hiện Kỷ Luật Tuyệt Đối</h3>
+              <p class="text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+                Nếu cổ phiếu đang giữ vi phạm <b>Vạch Đỏ Cắt Lỗ (SL)</b>, phải dứt khoát đặt lệnh bán ATC ngay để bảo toàn 93% vốn còn lại. Ngược lại, nếu cổ phiếu có tín hiệu Mua chuẩn chỉ và giá đóng cửa cao nhất ngày, mở tài khoản công ty chứng khoán để khớp lệnh theo đúng khối lượng đã tính toán.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================================== -->
+      <!-- CHƯƠNG 3: 8 NÚT BẤM TRÊN THANH TIÊU ĐỀ (HEADER) -->
+      <!-- ===================================================================== -->
+      <section id="header-controls" class="scroll-mt-24 space-y-6">
+        <div class="flex items-center gap-3 border-b border-slate-200 dark:border-slate-800 pb-4">
+          <div class="w-10 h-10 rounded-2xl bg-sky-500/10 text-sky-600 dark:text-sky-400 font-black flex items-center justify-center text-lg shadow-sm">3</div>
+          <div>
+            <h2 class="text-2xl font-black text-slate-900 dark:text-white">8 Nút Bấm Trên Thanh Tiêu Đề (Header Toolbar)</h2>
+            <p class="text-xs text-slate-500 font-medium">Hướng dẫn giải thích siêu cặn kẽ từng nút, vị trí, chức năng và khi nào nên bấm</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+          <!-- Nút 1: Ô Tìm Kiếm Mã & Nút Tìm ↵ -->
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm card-hover space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="badge-label bg-sky-500/15 text-sky-600 dark:text-sky-400">Góc Trên Bên Trái</span>
+              <span class="font-mono text-xs font-bold text-slate-400">ID: btn-quick-search-submit</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-2xl">🔍</span>
+              <h3 class="font-extrabold text-base text-slate-900 dark:text-white">Ô Tìm Mã & Nút Tìm (Enter)</h3>
+            </div>
+            <div class="text-xs text-slate-600 dark:text-slate-300 space-y-1.5 font-medium leading-relaxed">
+              <p><b>• Nút này làm gì?</b> Tìm kiếm và mở ngay lập tức biểu đồ của bất kỳ mã cổ phiếu nào trong hơn 1,520 mã trên cả 3 sàn HOSE, HNX, UPCOM.</p>
+              <p><b>• Cách dùng:</b> Gõ 3 ký tự mã cổ phiếu (ví dụ: <span class="font-bold text-sky-500">TCB, HPG, SSI, FPT, VNM, MWG</span>) rồi nhấn phím <b>Enter</b> trên bàn phím hoặc nhấp chuột vào nút <b>Tìm ↵</b>.</p>
+              <p><b>• Khi nào nên bấm?</b> Khi bạn muốn soi một mã cổ phiếu mới để xem dòng tiền, bước giá và tín hiệu mua bán của Bot.</p>
+            </div>
+          </div>
+
+          <!-- Nút 2: Khung Thời Gian 1D / 1W / 1M -->
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm card-hover space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="badge-label bg-indigo-500/15 text-indigo-600 dark:text-indigo-400">Cạnh Ô Tìm Kiếm</span>
+              <span class="font-mono text-xs font-bold text-slate-400">Thẻ Khung Nến: 1D / 1W / 1M</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-2xl">⏱️</span>
+              <h3 class="font-extrabold text-base text-slate-900 dark:text-white">Bộ 3 Nút Đổi Khung Thời Gian (1D, 1W, 1M)</h3>
+            </div>
+            <div class="text-xs text-slate-600 dark:text-slate-300 space-y-1.5 font-medium leading-relaxed">
+              <p><b>• 1D (Nến Ngày):</b> Mỗi cây nến biểu thị biến động trong 1 ngày giao dịch. Dùng hàng ngày để theo dõi sát sao nhịp tăng giảm ngắn hạn.</p>
+              <p><b>• 1W (Nến Tuần):</b> Mỗi cây nến là 1 tuần giao dịch. Bấm vào cuối tuần để nhìn rõ xu hướng chủ đạo, không bị đánh lừa bởi những phiên rung lắc tâm lý trong tuần.</p>
+              <p><b>• 1M (Nến Tháng):</b> Mỗi cây nến là 1 tháng. Dành cho nhà đầu tư tích sản, nhìn chu kỳ vĩ mô nhiều năm của doanh nghiệp lớn.</p>
+            </div>
+          </div>
+
+          <!-- Nút 3: Tạm Dừng / Tiếp Tục Nạp Dữ Liệu Live (⏸️ / ▶️) -->
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm card-hover space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="badge-label bg-amber-500/15 text-amber-600 dark:text-amber-400">Header Trái</span>
+              <span class="font-mono text-xs font-bold text-slate-400">ID: btn-toggle-feed</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-2xl">⏸️ / ▶️</span>
+              <h3 class="font-extrabold text-base text-slate-900 dark:text-white">Nút Tạm Dừng Nạp Giá (Freeze Feed)</h3>
+            </div>
+            <div class="text-xs text-slate-600 dark:text-slate-300 space-y-1.5 font-medium leading-relaxed">
+              <p><b>• Nút này làm gì?</b> Đóng băng tạm thời việc các con số trên sổ lệnh và biểu đồ nhảy liên tục, giúp bạn đọc số liệu một cách tĩnh tâm mà không bị hoa mắt.</p>
+              <p><b>• Khi nào nên bấm?</b> Trong các khung giờ giao dịch cao điểm (09:45 - 10:30 hoặc 14:00 - 14:30), các lệnh khớp liên hồi. Nếu muốn dừng lại để ghi chép hoặc soi kỹ các bước giá kê, bấm <b>⏸️</b> để dừng. Bấm lại <b>▶️</b> để máy tính tiếp tục nạp giá trực tiếp.</p>
+            </div>
+          </div>
+
+          <!-- Nút 4: Làm Mới Ngay (🔄) -->
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm card-hover space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="badge-label bg-emerald-500/15 text-emerald-600 dark:text-emerald-400">Header Trái</span>
+              <span class="font-mono text-xs font-bold text-slate-400">ID: btn-manual-refresh</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-2xl">🔄</span>
+              <h3 class="font-extrabold text-base text-slate-900 dark:text-white">Nút Cưỡng Bức Làm Mới Dữ Liệu</h3>
+            </div>
+            <div class="text-xs text-slate-600 dark:text-slate-300 space-y-1.5 font-medium leading-relaxed">
+              <p><b>• Nút này làm gì?</b> Ép phần mềm gọi ngay tức khắc nến mới nhất từ máy chủ sàn chứng khoán và tính toán lại toàn bộ chỉ báo mà không cần chờ chu kỳ đếm ngược.</p>
+              <p><b>• Khi nào nên bấm?</b> Khi bạn vừa mở máy lại sau giờ nghỉ trưa, hoặc ngay sau phiên khớp lệnh định kỳ đóng cửa ATC (sau 14:45) để xem mức giá chốt phiên chính thức trong ngày.</p>
+            </div>
+          </div>
+
+          <!-- Nút 5: Bộ 3 Nút Đổi Cỡ Chữ (Vừa / To ⭐ / Rất To) -->
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm card-hover space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="badge-label bg-teal-500/15 text-teal-600 dark:text-teal-400">Header Phải</span>
+              <span class="font-mono text-xs font-bold text-slate-400">ID: font-normal / font-large / font-xlarge</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-2xl">🔤</span>
+              <h3 class="font-extrabold text-base text-slate-900 dark:text-white">Bộ Chỉnh Cỡ Chữ To Rõ Ràng</h3>
+            </div>
+            <div class="text-xs text-slate-600 dark:text-slate-300 space-y-1.5 font-medium leading-relaxed">
+              <p><b>• Vừa:</b> Kích thước font chuẩn cho người dùng quen làm việc trên màn hình máy tính để bàn độ phân giải lớn.</p>
+              <p><b>• To ⭐ (Khuyên dùng):</b> Cỡ chữ phóng to 115%, con số giá và khối lượng to rõ ràng, các chi tiết nến hiển thị sắc nét, nhìn lâu không mỏi mắt.</p>
+              <p><b>• Rất To:</b> Cỡ chữ đại 130%, thiết kế riêng cho người lớn tuổi, mắt kém hoặc khi ngồi theo dõi biểu đồ từ khoảng cách xa.</p>
+            </div>
+          </div>
+
+          <!-- Nút 6: Đổi Màu Giao Diện Sáng / Tối (☀️ / 🌙) -->
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm card-hover space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="badge-label bg-amber-500/15 text-amber-600 dark:text-amber-400">Header Phải</span>
+              <span class="font-mono text-xs font-bold text-slate-400">ID: btn-toggle-theme</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-2xl">☀️ / 🌙</span>
+              <h3 class="font-extrabold text-base text-slate-900 dark:text-white">Nút Đổi Màu Nền Sáng / Tối (Theme)</h3>
+            </div>
+            <div class="text-xs text-slate-600 dark:text-slate-300 space-y-1.5 font-medium leading-relaxed">
+              <p><b>• Nền Đen (Dark Mode):</b> Giao diện phong cách phòng giao dịch tài chính hiện đại, giảm tối đa ánh sáng xanh, rất dịu mắt khi xem vào buổi tối.</p>
+              <p><b>• Nền Trắng (Light Mode):</b> Tươi sáng, độ tương phản chữ đen trên nền trắng đạt chuẩn quốc tế WCAG AAA, đặc biệt dễ đọc khi ngồi trong phòng nhiều ánh sáng ban ngày.</p>
+            </div>
+          </div>
+
+          <!-- Nút 7: Đánh Dấu Sao Yêu Thích (☆ / ★) -->
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm card-hover space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="badge-label bg-amber-500/15 text-amber-600 dark:text-amber-400">Bên Cạnh Mã CP</span>
+              <span class="font-mono text-xs font-bold text-slate-400">ID: btn-toggle-active-star</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-2xl text-amber-400">⭐</span>
+              <h3 class="font-extrabold text-base text-slate-900 dark:text-white">Nút Đánh Dấu Sao Cổ Phiếu (Watchlist)</h3>
+            </div>
+            <div class="text-xs text-slate-600 dark:text-slate-300 space-y-1.5 font-medium leading-relaxed">
+              <p><b>• Nút này làm gì?</b> Đưa cổ phiếu bạn đang theo dõi vào danh sách ưu tiên ghim trên đầu.</p>
+              <p><b>• Cách dùng:</b> Khi đang xem bất kỳ mã nào (ví dụ TCB, HPG), nhấp chuột vào dấu sao <b>☆</b> để chuyển thành ngôi sao vàng <b>★</b>. Cổ phiếu sẽ tự động lưu vào Tab Danh Mục Theo Dõi để mỗi ngày mở máy lên là thấy ngay mà không cần gõ lại mã.</p>
+            </div>
+          </div>
+
+          <!-- Nút 8: Đóng Gói Xuất Báo Cáo (📦) -->
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm card-hover space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="badge-label bg-emerald-500/15 text-emerald-600 dark:text-emerald-400">Header Phải</span>
+              <span class="font-mono text-xs font-bold text-slate-400">ID: btn-open-export</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-2xl">📦</span>
+              <h3 class="font-extrabold text-base text-slate-900 dark:text-white">Nút Đóng Gói Xuất File Báo Cáo</h3>
+            </div>
+            <div class="text-xs text-slate-600 dark:text-slate-300 space-y-1.5 font-medium leading-relaxed">
+              <p><b>• Nút này làm gì?</b> Xuất toàn bộ phần mềm ra các gói độc lập để gửi cho người thân sử dụng ở máy tính khác:</p>
+              <p>1. <b>File HTML Độc Lập:</b> Chạy trực tiếp trên trình duyệt ở bất kỳ máy tính nào mà không cần cài đặt Python.</p>
+              <p>2. <b>Script Python (.py):</b> Dành cho người muốn chạy kịch bản quét tự động.</p>
+              <p>3. <b>File Phím Tắt (.bat):</b> Tạo shortcut 1-click mang sang USB để mở nhanh trên máy khác.</p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ===================================================================== -->
+      <!-- CHƯƠNG 4: 20 CÔNG CỤ TRÊN KHUNG BIỂU ĐỒ NẾN -->
+      <!-- ===================================================================== -->
+      <section id="chart-controls" class="scroll-mt-24 space-y-6">
+        <div class="flex items-center gap-3 border-b border-slate-200 dark:border-slate-800 pb-4">
+          <div class="w-10 h-10 rounded-2xl bg-sky-500/10 text-sky-600 dark:text-sky-400 font-black flex items-center justify-center text-lg shadow-sm">4</div>
+          <div>
+            <h2 class="text-2xl font-black text-slate-900 dark:text-white">20 Công Cụ & Nút Bấm Trên Biểu Đồ Nến Kỹ Thuật</h2>
+            <p class="text-xs text-slate-500 font-medium">Làm chủ thanh công cụ vẽ, thu phóng, thước đo Fibonacci và chỉ báo</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm card-hover space-y-2">
+            <span class="badge-label bg-amber-500/15 text-amber-500">ID: btn-clean-mode</span>
+            <h3 class="font-extrabold text-sm text-slate-900 dark:text-white flex items-center gap-2">
+              <span>⚡</span> Chế Độ Nến Sạch
+            </h3>
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+              <b>Tác dụng:</b> Tạm thời ẩn toàn bộ các đường MA, dải Bollinger Bands, lưới Fibo và chỉ báo phụ, chỉ để lại nến Nhật và thanh khối lượng thuần khiết. <br>
+              <b>Khi nào dùng?</b> Khi màn hình có quá nhiều đường kẻ làm rối mắt, cần nhìn sạch để phát hiện mẫu hình nến đảo chiều (Nến Búa, Nhấn chìm tăng trưởng, Doji).
+            </p>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm card-hover space-y-2">
+            <span class="badge-label bg-indigo-500/15 text-indigo-400">ID: type-candle / type-line / type-area</span>
+            <h3 class="font-extrabold text-sm text-slate-900 dark:text-white flex items-center gap-2">
+              <span>🕯️</span> Đổi Kiểu Vẽ Nến / Đường / Vùng
+            </h3>
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+              <b>• Nến:</b> Nến Nhật xanh/đỏ truyền thống (chuẩn và khuyến nghị dùng 95% thời gian). <br>
+              <b>• Đường (Line):</b> Nối các mức giá đóng cửa thành đường trơn (thích hợp nhìn xu hướng lớn). <br>
+              <b>• Vùng (Area):</b> Đổ bóng dưới chân nến (nhìn độ dốc dòng tiền tích lũy).
+            </p>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm card-hover space-y-2">
+            <span class="badge-label bg-sky-500/15 text-sky-400">ID: btn-zoom-in & btn-zoom-out</span>
+            <h3 class="font-extrabold text-sm text-slate-900 dark:text-white flex items-center gap-2">
+              <span>➕ / ➖</span> Phóng To / Thu Nhỏ
+            </h3>
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+              <b>• Phím +:</b> Phóng to cây nến to bản ra để xem râu nến trên/dưới và giá mở cửa. <br>
+              <b>• Phím -:</b> Thu nhỏ lại để bao quát lịch sử giá 1 năm qua. <br>
+              <i>(Mẹo: Bạn có thể lăn bánh xe chuột giữa để thu phóng biểu đồ cực nhanh và mượt mà).</i>
+            </p>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm card-hover space-y-2">
+            <span class="badge-label bg-teal-500/15 text-teal-400">ID: btn-fit-chart</span>
+            <h3 class="font-extrabold text-sm text-slate-900 dark:text-white flex items-center gap-2">
+              <span>⛶</span> Nút Căn Vừa Màn Hình
+            </h3>
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+              <b>Tác dụng:</b> Nếu lỡ tay kéo chuột làm biểu đồ bị lệch sang một bên, méo trục giá hoặc trôi mất nến hiện tại, bấm nút <b>⛶</b> này để biểu đồ lập tức tự động căn giữa vừa khít khung nhìn.
+            </p>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm card-hover space-y-2">
+            <span class="badge-label bg-purple-500/15 text-purple-400">ID: btn-fullscreen-chart</span>
+            <h3 class="font-extrabold text-sm text-slate-900 dark:text-white flex items-center gap-2">
+              <span>🖥️</span> Nút Mở Toàn Màn Hình
+            </h3>
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+              <b>Tác dụng:</b> Phóng to khung biểu đồ chiếm trọn 100% diện tích màn hình máy tính để soi chi tiết từng bước giá. <br>
+              <b>Cách thoát:</b> Nhấn phím <b>ESC</b> trên góc trái bàn phím để quay lại giao diện ban đầu.
+            </p>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm card-hover space-y-2">
+            <span class="badge-label bg-rose-500/15 text-rose-400">ID: btn-open-ind-modal</span>
+            <h3 class="font-extrabold text-sm text-slate-900 dark:text-white flex items-center gap-2">
+              <span>⚙️</span> Tùy Chỉnh Chỉ Báo Kỹ Thuật
+            </h3>
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+              Mở bảng chọn bật/tắt các chỉ báo: Đường trung bình MA20, MA50, MA200, Dải Bollinger Bands, Chỉ số sức mạnh RSI, Phân kỳ MACD, Khối lượng Volume.
+            </p>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm card-hover space-y-2">
+            <span class="badge-label bg-amber-500/15 text-amber-400">ID: draw-btn-fibo</span>
+            <h3 class="font-extrabold text-sm text-slate-900 dark:text-white flex items-center gap-2">
+              <span>📐</span> Thước Đo Fibonacci 2 Điểm
+            </h3>
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+              <b>Cách dùng:</b> Bấm nút Fibo -> Bấm chuột vào Đáy -> Kéo chuột lên Đỉnh. Hệ thống sẽ tự động vẽ ra các mốc hỗ trợ vàng 38.2%, 50%, 61.8% để biết giá sẽ rơi về đâu thì nảy lên.
+            </p>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm card-hover space-y-2">
+            <span class="badge-label bg-blue-500/15 text-blue-400">ID: draw-btn-trendline</span>
+            <h3 class="font-extrabold text-sm text-slate-900 dark:text-white flex items-center gap-2">
+              <span>📏</span> Kẻ Đường Xu Hướng (Trendline)
+            </h3>
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+              Dùng chuột nối các đáy để kẻ đường hỗ trợ tăng giá, hoặc nối các đỉnh để kẻ đường cản giảm giá. Khi nến vượt qua đường kẻ giảm là tín hiệu mua bùng nổ.
+            </p>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm card-hover space-y-2">
+            <span class="badge-label bg-cyan-500/15 text-cyan-400">ID: draw-btn-ray</span>
+            <h3 class="font-extrabold text-sm text-slate-900 dark:text-white flex items-center gap-2">
+              <span>⚡</span> Kẻ Tia Xu Hướng (Ray)
+            </h3>
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+              Kẻ một tia bắt đầu từ điểm bạn chọn và phóng dài vô tận về phía bên phải biểu đồ. Giúp bạn định hình góc dốc tăng giá của cổ phiếu trong tương lai.
+            </p>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm card-hover space-y-2">
+            <span class="badge-label bg-slate-500/15 text-slate-400">ID: draw-btn-horizontal</span>
+            <h3 class="font-extrabold text-sm text-slate-900 dark:text-white flex items-center gap-2">
+              <span>➖</span> Đường Ngang Hỗ Trợ / Kháng Cự
+            </h3>
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+              Bấm một nhấp chuột vào mức giá bất kỳ để kẻ một đường nằm ngang chạy suốt đồ thị. Dùng để đánh dấu các đỉnh lịch sử hoặc đáy cũ mà giá hay phản ứng.
+            </p>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm card-hover space-y-2">
+            <span class="badge-label bg-rose-500/15 text-rose-400">ID: draw-btn-clear</span>
+            <h3 class="font-extrabold text-sm text-slate-900 dark:text-white flex items-center gap-2">
+              <span>🗑️</span> Nút Xóa Toàn Bộ Nét Vẽ
+            </h3>
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+              <b>Tác dụng:</b> Xóa sạch tất cả các đường trendline, tia ray, thước đo Fibo bạn vừa kẻ để lấy lại biểu đồ sạch đẹp ban đầu.
+            </p>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm card-hover space-y-2">
+            <span class="badge-label bg-emerald-500/15 text-emerald-400">ID: draw-btn-toggle-tpsl</span>
+            <h3 class="font-extrabold text-sm text-slate-900 dark:text-white flex items-center gap-2">
+              <span>🎯</span> Bật / Tắt Thẻ Mục Tiêu TP / SL
+            </h3>
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+              Hiển thị trực quan ngay trên thân nến hai vạch màu: Vạch xanh lá là giá chốt lời kỳ vọng (Take Profit), vạch đỏ là giá cắt lỗ an toàn (Stop Loss) do AI tính toán.
+            </p>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm card-hover space-y-2">
+            <span class="badge-label bg-sky-500/15 text-sky-400">ID: draw-btn-cursor</span>
+            <h3 class="font-extrabold text-sm text-slate-900 dark:text-white flex items-center gap-2">
+              <span>👆</span> Con Trỏ Chuột Bình Thường
+            </h3>
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+              Chuyển chuột từ chế độ vẽ thước về lại chế độ trỏ bình thường để kéo rê biểu đồ hoặc soi thông tin ngày và giá của từng cây nến.
+            </p>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm card-hover space-y-2">
+            <span class="badge-label bg-amber-500/15 text-amber-400">ID: btn-reset-fibo-pick</span>
+            <h3 class="font-extrabold text-sm text-slate-900 dark:text-white flex items-center gap-2">
+              <span>🔄</span> Chấm Lại Điểm Fibo
+            </h3>
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+              Hủy điểm chấm vừa chọn để bạn nhấp lại đúng vào đỉnh và đáy chuẩn xác nhất mà không cần phải xóa hết hình vẽ khác.
+            </p>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm card-hover space-y-2">
+            <span class="badge-label bg-slate-500/15 text-slate-400">ID: btn-cancel-draw</span>
+            <h3 class="font-extrabold text-sm text-slate-900 dark:text-white flex items-center gap-2">
+              <span>❌</span> Nút Hủy Thao Tác Vẽ
+            </h3>
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+              Hủy ngay lập tức lệnh kẻ đường đang dang dở nếu bạn đổi ý không muốn kẻ nữa.
+            </p>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm card-hover space-y-2">
+            <span class="badge-label bg-sky-500/15 text-sky-400">ID: btn-floating-scroll-to-chart</span>
+            <h3 class="font-extrabold text-sm text-slate-900 dark:text-white flex items-center gap-2">
+              <span>📈</span> Nút Nổi Cuộn Lên Biểu Đồ
+            </h3>
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+              Nút tròn nổi ở góc dưới màn hình. Khi bạn đang cuộn xuống xem các bảng tài chính hoặc tin tức, bấm nút này để màn hình tự động lướt nhanh về khung biểu đồ trên đỉnh.
+            </p>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ===================================================================== -->
+      <!-- CHƯƠNG 5: SỔ LỆNH & DÒNG TIỀN FIREANT CHI TIẾT 100% -->
+      <!-- ===================================================================== -->
+      <section id="orderbook-guide" class="scroll-mt-24 space-y-6">
+        <div class="flex items-center gap-3 border-b border-slate-200 dark:border-slate-800 pb-4">
+          <div class="w-10 h-10 rounded-2xl bg-sky-500/10 text-sky-600 dark:text-sky-400 font-black flex items-center justify-center text-lg shadow-sm">5</div>
+          <div>
+            <h2 class="text-2xl font-black text-slate-900 dark:text-white">Bảng Sổ Lệnh & Dòng Khớp Lệnh FireAnt (Bên Trái)</h2>
+            <p class="text-xs text-slate-500 font-medium">Hiểu rõ từng con số trong 3 bước giá và cách bắt bài dòng tiền lớn</p>
+          </div>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-6">
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Cột 1: Giải thích 3 mức giá Mua / Bán -->
+            <div class="space-y-4">
+              <h3 class="font-black text-base text-slate-900 dark:text-white flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span>1. Bảng 3 Mức Giá Đặt Mua & Đặt Bán</span>
+              </h3>
+              <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+                Mỗi cổ phiếu luôn có 2 bên: <b>Bên Mua</b> (chờ mua giá thấp) và <b>Bên Bán</b> (chờ bán giá cao). Bảng này hiển thị 3 mức giá tốt nhất của mỗi bên:
+              </p>
+              <div class="space-y-2 text-xs font-medium">
+                <div class="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-500/30">
+                  <b class="text-emerald-700 dark:text-emerald-400">CỘT ĐẶT MUA (BÊN TRÁI):</b>
+                  <p class="mt-1 text-slate-600 dark:text-slate-300">Giá 1 là giá mua cao nhất hiện tại (ưu tiên khớp trước). Giá 2, Giá 3 là các mức giá kê thấp hơn để chờ gom hàng dự phòng.</p>
+                </div>
+                <div class="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/20 border border-rose-500/30">
+                  <b class="text-rose-700 dark:text-rose-400">CỘT ĐẶT BÁN (BÊN PHẢI):</b>
+                  <p class="mt-1 text-slate-600 dark:text-slate-300">Giá 1 là giá bán rẻ nhất hiện tại (ưu tiên bán trước). Giá 2, Giá 3 là các mức giá treo cao hơn chờ người mua đẩy giá lên.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Cột 2: Giải thích Dòng lệnh khớp từng giây -->
+            <div class="space-y-4">
+              <h3 class="font-black text-base text-slate-900 dark:text-white flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-sky-500 animate-pulse"></span>
+                <span>2. Dòng Khớp Lệnh Thời Gian Thực (Time & Sales)</span>
+              </h3>
+              <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+                Cập nhật từng tích tắc các lệnh vừa thực sự giao dịch thành công trên sàn:
+              </p>
+              <div class="space-y-2 text-xs font-medium">
+                <div class="p-3 rounded-xl bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700">
+                  <span class="text-emerald-600 dark:text-emerald-400 font-bold">🟢 MÀU XANH LÁ (CHỦ ĐỘNG MUA):</span>
+                  <p class="mt-1 text-slate-600 dark:text-slate-300">Người mua không thèm trả giá, chấp nhận bấm nút Mua thẳng vào giá bên bán đang treo. <b>Ý nghĩa: Cầu mua rất khỏe, sẵn sàng gom giá cao!</b></p>
+                </div>
+                <div class="p-3 rounded-xl bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700">
+                  <span class="text-rose-600 dark:text-rose-400 font-bold">🔴 MÀU ĐỎ (CHỦ ĐỘNG BÁN):</span>
+                  <p class="mt-1 text-slate-600 dark:text-slate-300">Người bán bán tống bán tháo thẳng vào giá người mua đang chờ. <b>Ý nghĩa: Áp lực chốt lời hoặc xả hàng lớn!</b></p>
+                </div>
+                <div class="p-3 rounded-xl bg-amber-50 dark:bg-amber-950/20 border border-amber-500/30">
+                  <span class="text-amber-600 dark:text-amber-400 font-bold">🔥 PHÁT HIỆN LỆNH CÁ MẬP:</span>
+                  <p class="mt-1 text-slate-600 dark:text-slate-300">Những lệnh có khối lượng từ <b>50,000 đến 100,000+ cổ phiếu</b> khớp một phát trong 1 giây là lệnh của tổ chức, tay to. Nếu thấy lệnh cá mập màu xanh xuất hiện liên tục thì cổ phiếu sắp tăng mạnh.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Các nút bổ trợ của Sổ lệnh -->
+          <div class="border-t border-slate-200 dark:border-slate-800 pt-4 flex flex-wrap gap-3">
+            <span class="text-xs font-bold text-slate-500 self-center">Các nút hỗ trợ sổ lệnh:</span>
+            <span class="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold text-slate-700 dark:text-slate-200">ID: btn-tape-refresh-live (⚡ Làm mới sổ lệnh ngay)</span>
+            <span class="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold text-slate-700 dark:text-slate-200">ID: btn-sync-all-stocks (🔄 Đồng bộ toàn bộ 1,520 mã)</span>
+            <span class="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold text-slate-700 dark:text-slate-200">ID: btn-tape-download-history (📦 Tải toàn bộ kho lưu trữ nến)</span>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ===================================================================== -->
+      <!-- CHƯƠNG 6: 3 CHẾ ĐỘ BOT ĐỊNH LƯỢNG AI QUANT -->
+      <!-- ===================================================================== -->
+      <section id="quant-bots" class="scroll-mt-24 space-y-6">
+        <div class="flex items-center gap-3 border-b border-slate-200 dark:border-slate-800 pb-4">
+          <div class="w-10 h-10 rounded-2xl bg-sky-500/10 text-sky-600 dark:text-sky-400 font-black flex items-center justify-center text-lg shadow-sm">6</div>
+          <div>
+            <h2 class="text-2xl font-black text-slate-900 dark:text-white">3 Chế Độ Bot Định Lượng AI Quant (Nên Chọn Chế Độ Nào?)</h2>
+            <p class="text-xs text-slate-500 font-medium">Lựa chọn chế độ giao dịch phù hợp với tính cách và quỹ thời gian rảnh của bạn</p>
+          </div>
+        </div>
+
+        <div class="space-y-4">
+          
+          <!-- Chế độ 1 -->
+          <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border-2 border-amber-500/40 shadow-sm card-hover space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="badge-label bg-amber-500/20 text-amber-600 dark:text-amber-400">Chế Độ 1 · ID: btn-bot-mode-short</span>
+              <span class="text-xl">⚡</span>
+            </div>
+            <h3 class="font-black text-lg text-slate-900 dark:text-white">Bot Ngắn Hạn (Lướt Sóng T+ / Bùng Nổ VCP)</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-medium text-slate-600 dark:text-slate-300">
+              <div>
+                <b class="text-slate-900 dark:text-white">Dành cho ai?</b>
+                <p class="mt-1">Người có thời gian mở bảng điện 1-2 lần mỗi ngày, thích lướt sóng nhanh, không thích chôn vốn lâu.</p>
+              </div>
+              <div>
+                <b class="text-slate-900 dark:text-white">Thời gian nắm giữ:</b>
+                <p class="mt-1">Từ 3 đến 7 ngày (T+2.5 đến T+5). Đạt mục tiêu lời 5% - 8% là chủ động chốt lời bảo toàn lợi nhuận.</p>
+              </div>
+              <div>
+                <b class="text-slate-900 dark:text-white">Quy tắc kỷ luật:</b>
+                <p class="mt-1 text-rose-500 font-bold">Nếu giá giảm thủng mốc Stop Loss (SL), phải bán dứt khoát ngay, không được chần chừ tiếc nuối!</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chế độ 2 -->
+          <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border-2 border-sky-500/40 shadow-sm card-hover space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="badge-label bg-sky-500/20 text-sky-600 dark:text-sky-400">Chế Độ 2 · ID: btn-bot-mode-mid</span>
+              <span class="text-xl">🚀</span>
+            </div>
+            <h3 class="font-black text-lg text-slate-900 dark:text-white">Bot Trung Hạn (Quant v2 · Siêu Cổ Phiếu Tăng Trưởng)</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-medium text-slate-600 dark:text-slate-300">
+              <div>
+                <b class="text-slate-900 dark:text-white">Dành cho ai?</b>
+                <p class="mt-1">Người bận rộn đi làm công sở, người lớn tuổi muốn đầu tư an nhàn, không muốn canh bảng điện mỗi ngày.</p>
+              </div>
+              <div>
+                <b class="text-slate-900 dark:text-white">Thời gian nắm giữ:</b>
+                <p class="mt-1">Từ 2 đến 6 tháng. Bỏ qua các nhịp rung lắc nhỏ để ăn trọn vẹn con sóng lớn 30% - 50%+.</p>
+              </div>
+              <div>
+                <b class="text-slate-900 dark:text-white">Quy tắc kỷ luật:</b>
+                <p class="mt-1 text-emerald-500 font-bold">Nắm giữ đến khi hết sóng tăng, không bị các phiên rung lắc tâm lý dọa mất hàng.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chế độ 3 -->
+          <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border-2 border-purple-500/40 shadow-sm card-hover space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="badge-label bg-purple-500/20 text-purple-600 dark:text-purple-400">Chế Độ 3 · ID: btn-bot-mode-reversion</span>
+              <span class="text-xl">🧲</span>
+            </div>
+            <h3 class="font-black text-lg text-slate-900 dark:text-white">Bot Sóng Hồi (Bắt Đáy Quá Bán Downtrend)</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-medium text-slate-600 dark:text-slate-300">
+              <div>
+                <b class="text-slate-900 dark:text-white">Dành cho ai?</b>
+                <p class="mt-1">Thích mua ở vùng giá rẻ bất ngờ khi cả thị trường đang hoảng loạn tháo chạy.</p>
+              </div>
+              <div>
+                <b class="text-slate-900 dark:text-white">Thời gian nắm giữ:</b>
+                <p class="mt-1">Từ 1 đến 3 tuần cho đến khi cổ phiếu hồi phục về các đường cản MA20.</p>
+              </div>
+              <div>
+                <b class="text-slate-900 dark:text-white">Quy tắc kỷ luật:</b>
+                <p class="mt-1 text-purple-400 font-bold">Chỉ bắt đáy cổ phiếu có nền tảng cơ bản tốt (F-Score cao), tuyệt đối không bắt đáy cổ phiếu rác.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ===================================================================== -->
+      <!-- CHƯƠNG 7: BỘ BA RADAR SĂN CƠ HỘI -->
+      <!-- ===================================================================== -->
+      <section id="radars-guide" class="scroll-mt-24 space-y-6">
+        <div class="flex items-center gap-3 border-b border-slate-200 dark:border-slate-800 pb-4">
+          <div class="w-10 h-10 rounded-2xl bg-sky-500/10 text-sky-600 dark:text-sky-400 font-black flex items-center justify-center text-lg shadow-sm">7</div>
+          <div>
+            <h2 class="text-2xl font-black text-slate-900 dark:text-white">Bộ Ba Radar Săn Cơ Hội Toàn Thị Trường (Dùng Như Thế Nào?)</h2>
+            <p class="text-xs text-slate-500 font-medium">Quét hơn 1,520 mã cổ phiếu để tìm ra những cơ hội nổi bật nhất</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          
+          <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm card-hover space-y-3">
+            <span class="badge-label bg-amber-500/20 text-amber-500 font-bold">ID: btn-open-tplus-radar</span>
+            <h3 class="font-extrabold text-base text-slate-900 dark:text-white">Radar Quét T+</h3>
+            <p class="text-xs text-slate-600 dark:text-slate-300 font-medium leading-relaxed">
+              <b>Bấm vào khi nào?</b> Vào khoảng <b>10:00 - 10:30 sáng</b> hoặc <b>14:00 chiều</b>. <br>
+              <b>Nó tìm cái gì?</b> Quét tất cả các mã đang có dòng tiền nổ volume gấp 2-3 lần trung bình 20 ngày, báo hiệu cổ phiếu sắp bước vào nhịp tăng phi mã.
+            </p>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm card-hover space-y-3">
+            <span class="badge-label bg-purple-500/20 text-purple-400 font-bold">ID: btn-open-reversion-radar</span>
+            <h3 class="font-extrabold text-base text-slate-900 dark:text-white">Radar Bắt Đáy Sóng Hồi</h3>
+            <p class="text-xs text-slate-600 dark:text-slate-300 font-medium leading-relaxed">
+              <b>Bấm vào khi nào?</b> Khi thị trường vừa trải qua một đợt sập mạnh (giảm 20-40 điểm). <br>
+              <b>Nó tìm cái gì?</b> Lọc ra những cổ phiếu tốt bị bán quá đà chạm về vùng hỗ trợ cứng, xác suất bật nảy kỹ thuật lên đến 85%.
+            </p>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm card-hover space-y-3">
+            <span class="badge-label bg-cyan-500/20 text-cyan-400 font-bold">ID: btn-open-rotation-radar</span>
+            <h3 class="font-extrabold text-base text-slate-900 dark:text-white">Radar Xoay Ngành RRG</h3>
+            <p class="text-xs text-slate-600 dark:text-slate-300 font-medium leading-relaxed">
+              <b>Bấm vào khi nào?</b> Đầu tuần hoặc đầu tháng. <br>
+              <b>Nó tìm cái gì?</b> Bản đồ 4 góc phần tư cho biết ngành nào đang <b>Dẫn dắt (Leading)</b>, ngành nào đang <b>Suy yếu (Weakening)</b> để bạn cơ cấu dòng tiền vào đúng nơi sinh lời cao nhất.
+            </p>
+          </div>
+
+        </div>
+
+        <div class="p-4 rounded-xl bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 flex flex-wrap gap-3 text-xs font-bold items-center">
+          <span class="text-slate-500">Các nút điều khiển radar:</span>
+          <span class="px-3 py-1.5 rounded-lg bg-white dark:bg-slate-700 shadow-sm text-slate-800 dark:text-slate-200">ID: btn-toggle-radar-sound (🔔 Bật/Tắt chuông báo động)</span>
+          <span class="px-3 py-1.5 rounded-lg bg-white dark:bg-slate-700 shadow-sm text-slate-800 dark:text-slate-200">ID: btn-tplus-mode-cards (🃏 Chế độ Thẻ chữ to)</span>
+          <span class="px-3 py-1.5 rounded-lg bg-white dark:bg-slate-700 shadow-sm text-slate-800 dark:text-slate-200">ID: btn-tplus-mode-table (📊 Bảng kê rút gọn)</span>
+        </div>
+      </section>
+
+      <!-- ===================================================================== -->
+      <!-- CHƯƠNG 8: 11 TAB PHÂN TÍCH PHÍA DƯỚI BẢNG ĐIỆN -->
+      <!-- ===================================================================== -->
+      <section id="bottom-tabs" class="scroll-mt-24 space-y-6">
+        <div class="flex items-center gap-3 border-b border-slate-200 dark:border-slate-800 pb-4">
+          <div class="w-10 h-10 rounded-2xl bg-sky-500/10 text-sky-600 dark:text-sky-400 font-black flex items-center justify-center text-lg shadow-sm">8</div>
+          <div>
+            <h2 class="text-2xl font-black text-slate-900 dark:text-white">11 Tab Phân Tích Chuyên Sâu (Phía Dưới Biểu Đồ)</h2>
+            <p class="text-xs text-slate-500 font-medium">Trung tâm dữ liệu toàn diện giúp bạn có cái nhìn 360 độ về thị trường</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm card-hover space-y-2">
+            <span class="badge-label bg-sky-500/15 text-sky-500 font-bold">Tab: tab-btn-scanner</span>
+            <h3 class="font-extrabold text-sm text-slate-900 dark:text-white">1. Bộ Quét 3 Sàn Toàn Diện</h3>
+            <p class="text-xs text-slate-600 dark:text-slate-300 font-medium">Lọc cổ phiếu theo các tiêu chí: khối lượng đột biến, vượt đỉnh 52 tuần, dòng tiền lớn gom hàng.</p>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm card-hover space-y-2">
+            <span class="badge-label bg-indigo-500/15 text-indigo-400 font-bold">Tab: tab-btn-action-board</span>
+            <h3 class="font-extrabold text-sm text-slate-900 dark:text-white">2. Bảng Hành Động & Đảo Vị Thế</h3>
+            <p class="text-xs text-slate-600 dark:text-slate-300 font-medium">Tổng hợp các mã cần bán chốt lời, các mã cần hạ tỷ trọng và các mã đang ở điểm mua lý tưởng.</p>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm card-hover space-y-2">
+            <span class="badge-label bg-emerald-500/15 text-emerald-400 font-bold">Tab: tab-btn-capital-blueprint</span>
+            <h3 class="font-extrabold text-sm text-slate-900 dark:text-white">3. Quản Lý Vốn 3 Danh Mục</h3>
+            <p class="text-xs text-slate-600 dark:text-slate-300 font-medium">Chia tài khoản làm 3 phần: Danh mục Lõi (50%), Danh mục T+ (30%), Tiền mặt dự phòng (20%).</p>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm card-hover space-y-2">
+            <span class="badge-label bg-amber-500/15 text-amber-400 font-bold">Tab: tab-btn-margin-advisor</span>
+            <h3 class="font-extrabold text-sm text-slate-900 dark:text-white">4. Cố Vấn Đòn Bẩy Margin</h3>
+            <p class="text-xs text-slate-600 dark:text-slate-300 font-medium">Cảnh báo khi nào được vay thêm tiền và khi nào tuyệt đối phải trả hết nợ Margin để tránh bị Call Margin.</p>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm card-hover space-y-2">
+            <span class="badge-label bg-teal-500/15 text-teal-400 font-bold">Tab: tab-btn-rag-report</span>
+            <h3 class="font-extrabold text-sm text-slate-900 dark:text-white">5. Báo Cáo Tài Chính & F-Score</h3>
+            <p class="text-xs text-slate-600 dark:text-slate-300 font-medium">Xem kết quả kinh doanh quý gần nhất, biên lợi nhuận, nợ vay, EPS, P/E, P/B và chấm điểm F-Score 0-9.</p>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm card-hover space-y-2">
+            <span class="badge-label bg-amber-500/15 text-amber-500 font-bold">Tab: tab-btn-watchlist-view</span>
+            <h3 class="font-extrabold text-sm text-slate-900 dark:text-white">6. Danh Mục Theo Dõi Cá Nhân</h3>
+            <p class="text-xs text-slate-600 dark:text-slate-300 font-medium">Bảng theo dõi các cổ phiếu bạn đã bấm dấu sao ★ để kiểm tra nhanh biến động giá mỗi ngày.</p>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm card-hover space-y-2">
+            <span class="badge-label bg-purple-500/15 text-purple-400 font-bold">Tab: tab-btn-f319-hub</span>
+            <h3 class="font-extrabold text-sm text-slate-900 dark:text-white">7. Thẩm Định Nick & Tin Tức F319</h3>
+            <p class="text-xs text-slate-600 dark:text-slate-300 font-medium">Xem các chủ đề nóng nhất trên diễn đàn F319, phân tích xem đám đông đang hô hào mua hay bán tháo.</p>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm card-hover space-y-2">
+            <span class="badge-label bg-rose-500/15 text-rose-400 font-bold">Tab: tab-btn-adv-crash-hub</span>
+            <h3 class="font-extrabold text-sm text-slate-900 dark:text-white">8. Radar Báo Sập Thị Trường</h3>
+            <p class="text-xs text-slate-600 dark:text-slate-300 font-medium">Cảnh báo sớm các dấu hiệu phân phối đỉnh của chỉ số VN-Index để bạn kịp chốt lời giữ tiền trước khi thị trường lao dốc.</p>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm card-hover space-y-2">
+            <span class="badge-label bg-cyan-500/15 text-cyan-400 font-bold">Tab: tab-btn-master-quant</span>
+            <h3 class="font-extrabold text-sm text-slate-900 dark:text-white">9. Mô Phỏng 5 in 1 Bot Quant</h3>
+            <p class="text-xs text-slate-600 dark:text-slate-300 font-medium">Hợp nhất 5 thuật toán định lượng cao cấp chạy song song để đưa ra khuyến nghị chuẩn xác nhất.</p>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm card-hover space-y-2">
+            <span class="badge-label bg-blue-500/15 text-blue-400 font-bold">Tab: tab-btn-accuracy</span>
+            <h3 class="font-extrabold text-sm text-slate-900 dark:text-white">10. Nhật Ký Deal Theo Từng Mã</h3>
+            <p class="text-xs text-slate-600 dark:text-slate-300 font-medium">Thống kê chi tiết lịch sử mua bán, mức giá vào, mức giá chốt lời và tỷ lệ lợi nhuận của từng thương vụ.</p>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm card-hover space-y-2">
+            <span class="badge-label bg-indigo-500/15 text-indigo-400 font-bold">Tab: tab-btn-backtest-ledger</span>
+            <h3 class="font-extrabold text-sm text-slate-900 dark:text-white">11. Sổ Kiểm Định Backtest 25 Năm</h3>
+            <p class="text-xs text-slate-600 dark:text-slate-300 font-medium">Kiểm tra tỷ lệ thắng của thuật toán trong suốt 25 năm qua trên từng mã cổ phiếu để an tâm ra quyết định.</p>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ===================================================================== -->
+      <!-- CHƯƠNG 9: HỘP THOẠI CHỈ BÁO & ĐÓNG GÓI XUẤT BÁO CÁO -->
+      <!-- ===================================================================== -->
+      <section id="modal-guides" class="scroll-mt-24 space-y-6">
+        <div class="flex items-center gap-3 border-b border-slate-200 dark:border-slate-800 pb-4">
+          <div class="w-10 h-10 rounded-2xl bg-sky-500/10 text-sky-600 dark:text-sky-400 font-black flex items-center justify-center text-lg shadow-sm">9</div>
+          <div>
+            <h2 class="text-2xl font-black text-slate-900 dark:text-white">Hộp Thoại Chỉ Báo Kỹ Thuật & Đóng Gói Xuất Báo Cáo</h2>
+            <p class="text-xs text-slate-500 font-medium">Hiểu rõ các tùy chọn cài đặt chuyên sâu trong các cửa sổ bật lên (Modals)</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          
+          <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="badge-label bg-rose-500/15 text-rose-500 font-bold">Cửa Sổ Chỉ Báo</span>
+              <span class="font-mono text-xs text-slate-400">ID: btn-open-ind-modal</span>
+            </div>
+            <h3 class="font-black text-base text-slate-900 dark:text-white">Các Chỉ Báo Kỹ Thuật Quan Trọng Nhất</h3>
+            <div class="space-y-2 text-xs font-medium text-slate-600 dark:text-slate-300">
+              <p><b>• MA20:</b> Đường trung bình 20 ngày. Nếu giá nằm trên MA20 là đang trong nhịp tăng ngắn hạn khỏe.</p>
+              <p><b>• MA50:</b> Đường trung bình 50 ngày. Ngưỡng nâng đỡ của các quỹ đầu tư lớn trong sóng trung hạn.</p>
+              <p><b>• MA200:</b> Đường phân định Uptrend và Downtrend dài hạn. Tuyệt đối không mua cổ phiếu nằm dưới MA200.</p>
+              <p><b>• Bollinger Bands:</b> Khi 2 dải thắt nút cổ chai siết chặt lại, báo hiệu cổ phiếu sắp bùng nổ cực mạnh.</p>
+              <p><b>• RSI:</b> Dưới 30 là vùng quá bán (canh mua), trên 70 là vùng quá mua (canh chốt lời).</p>
+            </div>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="badge-label bg-emerald-500/15 text-emerald-500 font-bold">Cửa Sổ Đóng Gói</span>
+              <span class="font-mono text-xs text-slate-400">ID: btn-open-export</span>
+            </div>
+            <h3 class="font-black text-base text-slate-900 dark:text-white">3 Tab Xuất File Ra Máy Tính Khác</h3>
+            <div class="space-y-2 text-xs font-medium text-slate-600 dark:text-slate-300">
+              <p><b>• Tab 1 (tab-export-html):</b> Xuất 1 file HTML chứa toàn bộ dữ liệu, mở lên xem ngay không cần cài thêm gì.</p>
+              <p><b>• Tab 2 (tab-export-python):</b> Tạo script Python lấy dữ liệu vnstock trực tiếp từ sở giao dịch.</p>
+              <p><b>• Tab 3 (tab-export-bat):</b> Tạo phím tắt 1-click để khởi động nhanh.</p>
+              <p class="pt-2 text-slate-400">Bấm <b>✕ (btn-close-export)</b> hoặc <b>Đóng bảng (btn-close-export-foot)</b> để thoát.</p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ===================================================================== -->
+      <!-- CHƯƠNG 10: SỨC KHỎE TÀI CHÍNH F-SCORE -->
+      <!-- ===================================================================== -->
+      <section id="fscore-guide" class="scroll-mt-24 space-y-6">
+        <div class="flex items-center gap-3 border-b border-slate-200 dark:border-slate-800 pb-4">
+          <div class="w-10 h-10 rounded-2xl bg-sky-500/10 text-sky-600 dark:text-sky-400 font-black flex items-center justify-center text-lg shadow-sm">10</div>
+          <div>
+            <h2 class="text-2xl font-black text-slate-900 dark:text-white">Thang Điểm Sức Khỏe Tài Chính Piotroski F-Score (0 - 9 Điểm)</h2>
+            <p class="text-xs text-slate-500 font-medium">Cách phân biệt cổ phiếu vàng và cổ phiếu rác trong 3 giây</p>
+          </div>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+          <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 font-medium leading-relaxed">
+            Giáo sư Joseph Piotroski (Đại học Stanford) đã nghiên cứu ra thang điểm 9 tiêu chí tài chính khắt khe nhất thế giới để chấm điểm mọi công ty niêm yết:
+          </p>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="p-4 rounded-xl bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-500/30">
+              <span class="text-xs font-black text-emerald-600 dark:text-emerald-400">8 - 9 ĐIỂM: SIÊU DOANH NGHIỆP</span>
+              <p class="text-xs text-slate-600 dark:text-slate-300 mt-1 leading-relaxed">Tài chính cực kỳ vững mạnh, nợ vay ít, tiền mặt dồi dào, biên lợi nhuận tăng trưởng đều. Rất an toàn để nắm giữ số tiền lớn!</p>
+            </div>
+            <div class="p-4 rounded-xl bg-amber-50 dark:bg-amber-950/20 border border-amber-500/30">
+              <span class="text-xs font-black text-amber-600 dark:text-amber-400">6 - 7 ĐIỂM: KHÁ & ỔN ĐỊNH</span>
+              <p class="text-xs text-slate-600 dark:text-slate-300 mt-1 leading-relaxed">Doanh nghiệp kinh doanh bình thường, không có rủi ro lớn, đủ tiêu chuẩn đầu tư trung và dài hạn.</p>
+            </div>
+            <div class="p-4 rounded-xl bg-rose-50 dark:bg-rose-950/20 border border-rose-500/30">
+              <span class="text-xs font-black text-rose-600 dark:text-rose-400">DƯỚI 5 ĐIỂM: NGUY HIỂM</span>
+              <p class="text-xs text-slate-600 dark:text-slate-300 mt-1 leading-relaxed">Dấu hiệu tài chính suy yếu, nợ vay ngập đầu hoặc lợi nhuận ảo trên sổ sách -> <b>Tuyệt đối không mua!</b></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================================== -->
+      <!-- CHƯƠNG 11: QUẢN TRỊ RỦI RO & QUY TẮC CẮT LỖ SL -->
+      <!-- ===================================================================== -->
+      <section id="risk-management" class="scroll-mt-24 space-y-6">
+        <div class="flex items-center gap-3 border-b border-slate-200 dark:border-slate-800 pb-4">
+          <div class="w-10 h-10 rounded-2xl bg-sky-500/10 text-sky-600 dark:text-sky-400 font-black flex items-center justify-center text-lg shadow-sm">11</div>
+          <div>
+            <h2 class="text-2xl font-black text-slate-900 dark:text-white">Quy Tắc Quản Trị Vốn & Kỷ Luật Cắt Lỗ Cực Kỳ Quan Trọng</h2>
+            <p class="text-xs text-slate-500 font-medium">Bí quyết sống còn để không bao giờ bị cháy tài khoản trên thị trường chứng khoán</p>
+          </div>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-2">
+              <b class="text-sm font-extrabold text-sky-600 dark:text-sky-400">1. Không Bao Giờ Dồn Hết Tiền</b>
+              <p class="text-xs text-slate-600 dark:text-slate-300 font-medium leading-relaxed">
+                Nếu có 100 triệu, hãy chia làm 3 - 4 phần (mỗi phần 25 - 30 triệu mua 1 cổ phiếu khác nhau). Không bao giờ "tất tay" (All-in) vào 1 mã duy nhất, dù mã đó có tốt đến mấy.
+              </p>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-2">
+              <b class="text-sm font-extrabold text-rose-600 dark:text-rose-400">2. Tuyệt Đối Tuân Thủ Stop Loss</b>
+              <p class="text-xs text-slate-600 dark:text-slate-300 font-medium leading-relaxed">
+                Khi giá cổ phiếu vi phạm mốc Cắt Lỗ (SL) của Bot, phải bán dứt khoát ngay! Cắt lỗ sớm 5% - 7% giúp bạn giữ lại 93% vốn để làm lại ở thương vụ khác. Đừng gồng lỗ để rồi mất 50%.
+              </p>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-2">
+              <b class="text-sm font-extrabold text-emerald-600 dark:text-emerald-400">3. Chốt Lời Từng Phần</b>
+              <p class="text-xs text-slate-600 dark:text-slate-300 font-medium leading-relaxed">
+                Khi cổ phiếu đạt mốc Take Profit 1 (lời 8% - 10%), hãy bán trước 50% số cổ phiếu để đút tiền vào túi. 50% còn lại giữ tiếp để gồng lãi tối đa, dời điểm cắt lỗ về giá vốn.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================================== -->
+      <!-- CHƯƠNG 12: FAQ -->
+      <!-- ===================================================================== -->
+      <section id="faq" class="scroll-mt-24 space-y-6">
+        <div class="flex items-center gap-3 border-b border-slate-200 dark:border-slate-800 pb-4">
+          <div class="w-10 h-10 rounded-2xl bg-sky-500/10 text-sky-600 dark:text-sky-400 font-black flex items-center justify-center text-lg shadow-sm">12</div>
+          <div>
+            <h2 class="text-2xl font-black text-slate-900 dark:text-white">Câu Hỏi Thường Gặp & Xử Lý Sự Cố (FAQ)</h2>
+            <p class="text-xs text-slate-500 font-medium">Giải đáp tất cả thắc mắc khi sử dụng phần mềm</p>
+          </div>
+        </div>
+
+        <div class="space-y-4">
+          <details class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm group">
+            <summary class="font-extrabold text-sm text-slate-900 dark:text-white cursor-pointer flex justify-between items-center">
+              <span>Q1: Mở phần mềm lên không thấy bảng đen CMD nào thì có phải phần mềm bị lỗi không?</span>
+              <span class="text-sky-500 group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <p class="mt-3 text-xs sm:text-sm text-slate-600 dark:text-slate-300 font-medium leading-relaxed">
+              <b>Trả lời:</b> Hoàn toàn bình thường! Đây là tính năng chạy ngầm được thiết kế riêng. Ứng dụng chạy hoàn toàn vô hình trong nền và tự bật trình duyệt web lên để bạn không bị vướng bận bởi các dòng lệnh kỹ thuật.
+            </p>
+          </details>
+
+          <details class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm group">
+            <summary class="font-extrabold text-sm text-slate-900 dark:text-white cursor-pointer flex justify-between items-center">
+              <span>Q2: Khi nào thì xuất hiện cây nến của ngày hôm nay?</span>
+              <span class="text-sky-500 group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <p class="mt-3 text-xs sm:text-sm text-slate-600 dark:text-slate-300 font-medium leading-relaxed">
+              <b>Trả lời:</b> Sau <b>09:15 sáng</b> mỗi ngày (khi sàn bắt đầu khớp lệnh liên tục), cây nến của ngày hôm nay sẽ tự động xuất hiện và nhảy giá theo từng giây. Nếu bạn mở trước 09:15 sáng, biểu đồ sẽ hiển thị cây nến gần nhất là phiên hôm qua.
+            </p>
+          </details>
+
+          <details class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm group">
+            <summary class="font-extrabold text-sm text-slate-900 dark:text-white cursor-pointer flex justify-between items-center">
+              <span>Q3: Mỗi khi có tính năng mới trên GitHub thì phần mềm có tự cập nhật không?</span>
+              <span class="text-sky-500 group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <p class="mt-3 text-xs sm:text-sm text-slate-600 dark:text-slate-300 font-medium leading-relaxed">
+              <b>Trả lời:</b> Có! Hệ thống chạy ngầm quét kiểm tra GitHub mỗi 45 giây. Ngay khi có bản cập nhật mới, phần mềm tự kéo về, tự giải nén và trình duyệt web sẽ tự động làm mới trang mà bạn không cần phải làm bất cứ thao tác nào.
+            </p>
+          </details>
+
+          <details class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm group">
+            <summary class="font-extrabold text-sm text-slate-900 dark:text-white cursor-pointer flex justify-between items-center">
+              <span>Q4: Tại sao sổ lệnh bên trái đôi khi đứng yên không nhảy?</span>
+              <span class="text-sky-500 group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <p class="mt-3 text-xs sm:text-sm text-slate-600 dark:text-slate-300 font-medium leading-relaxed">
+              <b>Trả lời:</b> Có 2 khả năng: 1 là bạn đang ở ngoài giờ giao dịch (buổi tối hoặc cuối tuần thị trường đóng cửa); 2 là bạn vô tình bấm vào nút <b>⏸️ (Freeze Feed)</b> trên thanh tiêu đề. Bạn chỉ cần bấm lại vào nút <b>▶️</b> hoặc bấm nút <b>🔄 Làm mới ngay</b> để dữ liệu tiếp tục nhảy.
+            </p>
+          </details>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- FOOTER -->
+  <!-- ========================================================================= -->
+  <footer class="mt-20 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 py-10 text-center text-xs text-slate-500 dark:text-slate-400">
+    <div class="max-w-7xl mx-auto px-4 space-y-2">
+      <div class="font-black text-sm text-slate-900 dark:text-white">Phần Mềm Chứng Khoán VNChart Senior</div>
+      <p>Cẩm nang hướng dẫn sử dụng toàn diện dành cho nhà đầu tư cá nhân và gia đình</p>
+      <div class="pt-4 text-[11px] text-slate-400">
+        © 2026 VNChart Senior. Bản quyền thuộc về đội ngũ phát triển.
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================================================= -->
+  <!-- CLIENT JAVASCRIPT: THEME & FONT & SEARCH -->
+  <!-- ========================================================================= -->
+  <script>
+    // Theme Toggle
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+    const htmlEl = document.documentElement;
+
+    function applyTheme(isDark) {
+      if (isDark) {
+        htmlEl.classList.add('dark');
+        themeIcon.textContent = '☀️';
+        localStorage.setItem('vnchart_docs_theme', 'dark');
+      } else {
+        htmlEl.classList.remove('dark');
+        themeIcon.textContent = '🌙';
+        localStorage.setItem('vnchart_docs_theme', 'light');
+      }
+    }
+
+    const savedTheme = localStorage.getItem('vnchart_docs_theme');
+    if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      applyTheme(true);
+    } else {
+      applyTheme(false);
+    }
+
+    themeToggleBtn.addEventListener('click', () => {
+      applyTheme(!htmlEl.classList.contains('dark'));
+    });
+
+    // Font Size Toggle
+    const bodyEl = document.body;
+    const btnFontNormal = document.getElementById('btn-font-normal');
+    const btnFontLarge = document.getElementById('btn-font-large');
+    const btnFontXLarge = document.getElementById('btn-font-xlarge');
+
+    function setFontSize(size) {
+      bodyEl.classList.remove('font-size-large', 'font-size-xlarge');
+      [btnFontNormal, btnFontLarge, btnFontXLarge].forEach(b => {
+        b.classList.remove('bg-white', 'dark:bg-slate-700', 'shadow-sm', 'text-sky-600', 'dark:text-sky-300');
+      });
+
+      if (size === 'large') {
+        bodyEl.classList.add('font-size-large');
+        btnFontLarge.classList.add('bg-white', 'dark:bg-slate-700', 'shadow-sm', 'text-sky-600', 'dark:text-sky-300');
+      } else if (size === 'xlarge') {
+        bodyEl.classList.add('font-size-xlarge');
+        btnFontXLarge.classList.add('bg-white', 'dark:bg-slate-700', 'shadow-sm', 'text-sky-600', 'dark:text-sky-300');
+      } else {
+        btnFontNormal.classList.add('bg-white', 'dark:bg-slate-700', 'shadow-sm', 'text-sky-600', 'dark:text-sky-300');
+      }
+      localStorage.setItem('vnchart_docs_fontsize', size);
+    }
+
+    const savedFontSize = localStorage.getItem('vnchart_docs_fontsize') || 'normal';
+    setFontSize(savedFontSize);
+
+    btnFontNormal.addEventListener('click', () => setFontSize('normal'));
+    btnFontLarge.addEventListener('click', () => setFontSize('large'));
+    btnFontXLarge.addEventListener('click', () => setFontSize('xlarge'));
+
+    // Real-time Instant Search
+    const searchInput = document.getElementById('guide-search');
+    const searchCounter = document.getElementById('search-counter');
+    const cards = document.querySelectorAll('.card-hover');
+
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase().trim();
+        let count = 0;
+        cards.forEach(card => {
+          const text = card.textContent.toLowerCase();
+          if (!query || text.includes(query)) {
+            card.style.display = '';
+            count++;
+          } else {
+            card.style.display = 'none';
+          }
+        });
+        if (searchCounter) {
+          searchCounter.textContent = query ? `${count} kết quả` : `${cards.length} mục`;
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>
